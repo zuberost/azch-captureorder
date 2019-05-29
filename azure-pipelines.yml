@@ -69,6 +69,7 @@ stages:
               dockerRegistryEndpoint: $(dockerRegistryServiceConnection)
 
           - task: KubernetesManifest@0
+            timeoutInMinutes: 25
             displayName: Create secret for MongoDB
             inputs:
               action: createSecret
@@ -78,6 +79,7 @@ stages:
               secretArguments: --from-literal=mongoHost=$(mongoHost) --from-literal=mongoUser=$(mongoUser) --from-literal=mongoPassword=$(mongoPassword)
 
           - task: KubernetesManifest@0
+            timeoutInMinutes: 25
             displayName: Deploy to Kubernetes cluster
             inputs:
               action: deploy
@@ -89,6 +91,7 @@ stages:
                 $(imageRepository):$(tag)
 
           - task: KubernetesManifest@0
+            timeoutInMinutes: 25
             displayName: Patch the deployment environment variables
             inputs:
               action: patch
